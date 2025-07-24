@@ -1,2 +1,4 @@
+stringtie_gtf: updated_stringtie_merged.gtf
 candidate_gtf: 2c_embryo_transcripts.gtf 
 genome_fasta: /uufs/chpc.utah.edu/common/home/hcibcore/atlatl/data/Mouse/GRCm38/Mus_musculus.GRCm38.dna.primary_assembly.fa
+reference_bed: gencode_mm10_exons_fixed.bed
