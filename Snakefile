@@ -104,7 +104,7 @@ rule interproscan:
     shell:
         """
         #interproscan doesn't like * characters, need to remove them
-        sed 's/\*//g' {input.pep} > {wildcards.sample}/{wildcards.sample}_fixed_unique_novel_unannotated_no_known_overlap.pep
+        sed 's/\\*//g' {input.pep} > {wildcards.sample}/{wildcards.sample}_fixed_unique_novel_unannotated_no_known_overlap.pep
         #running using only the pfam domain database-- can alter if desired with -appl 
         module load interproscan
         interproscan.sh --appl pfam -cpu 12 -i {wildcards.sample}/{wildcards.sample}_fixed_unique_novel_unannotated_no_known_overlap.pep -f tsv -o {wildcards.sample}/{wildcards.sample}_domains.tsv
