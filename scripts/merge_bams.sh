@@ -1,0 +1,7 @@
+#!/bin/bash
+
+module load samtools
+
+samtools merge merged_Early2cell.bam /scratch/general/nfs1/u6023077/ribolite_novel_transcripts/SRR13577568_GSM5049829_Early2cell_Ribo_rep1/SRR13577568_GSM5049829_Early2cell_Ribo_rep1_Aligned.sortedByCoord.out.bam /scratch/general/nfs1/u6023077/ribolite_novel_transcripts/SRR13577569_GSM5049830_Early2cell_Ribo_rep2/SRR13577569_GSM5049830_Early2cell_Ribo_rep2_Aligned.sortedByCoord.out.bam 
+
+samtools merge merged_Late2cell.bam /scratch/general/nfs1/u6023077/ribolite_novel_transcripts/SRR13577574_GSM5049835_Late2_Ribo_rep1/SRR13577574_GSM5049835_Late2_Ribo_rep1_Aligned.sortedByCoord.out.bam /scratch/general/nfs1/u6023077/ribolite_novel_transcripts/SRR13577575_GSM5049836_Late2_Ribo_rep2/SRR13577575_GSM5049836_Late2_Ribo_rep2_Aligned.sortedByCoord.out.bam
