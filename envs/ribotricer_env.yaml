@@ -1,8 +1,8 @@
 name: ribotricer_env
 channels:
-  - bioconda
   - conda-forge
-  - defaults
+  - bioconda 
+  
 dependencies:
   - python=3.6
   - ribotricer
@@ -15,4 +15,3 @@ dependencies:
   - pysam>=0.11.2.2
   - quicksect>=0.2.0
   - scipy>=0.19.1
-  - tqdm>=4.23.4
