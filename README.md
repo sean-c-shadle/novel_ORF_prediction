@@ -29,3 +29,5 @@ default-resources:
     slurm_account: "cairns"
     runtime: 720  # minutes
 ```
+## Snakemake workflow DAG
+![DAG](https://github.com/sean-c-shadle/novel_ORF_prediction/blob/main/dag2.png)
