@@ -1,4 +1,3 @@
-
 configfile: "config.yaml"
 
 #prefix for bam files, one per line.
@@ -60,14 +59,16 @@ rule extract_unique_genes:
         candidate_bed = rules.make_bedfile.output
     output:
         "{sample}/{sample}_unique_novel_unannotated_no_known_overlap.fasta"
+    conda:
+        "envs/ribotricer_env.yaml"
     params:
         reference_bed = config["reference_bed"],
         stringtie_gtf = config["stringtie_gtf"],
         fasta = config["genome_fasta"] 
     shell:
         """
-        module load bedtools
-        module load cufflinks
+        # module load bedtools
+        # module load cufflinks
         # -v    Only report those entries in A that have no overlap in B. Restricted by -f and -r.
         # -s    Force “strandedness”. That is, only report hits in B that overlap A on the same strand. By default, overlaps are reported without respect to strand.
         # -a    BAM/BED/GFF/VCF file “A”. Each feature in A is compared to B in search of overlaps. Use “stdin” if passing A with a UNIX pipe.
@@ -87,10 +88,12 @@ rule transdecoder:
         candidate_fasta = rules.extract_unique_genes.output
     output:
         "{sample}/{sample}_unique_novel_unannotated_no_known_overlap.fasta.transdecoder.pep"
+    conda:
+        "envs/ribotricer_env.yaml"
     shell:
         """
-        TransDecoder-TransDecoder-v5.7.1/TransDecoder.LongOrfs --complete_orfs_only -O {wildcards.sample} -t {input.candidate_fasta}
-        TransDecoder-TransDecoder-v5.7.1/TransDecoder.Predict -O {wildcards.sample} -t {input.candidate_fasta}
+        TransDecoder.LongOrfs --complete_orfs_only -O {wildcards.sample} -t {input.candidate_fasta}
+        TransDecoder.Predict -O {wildcards.sample} -t {input.candidate_fasta}
         """
 rule interproscan:
     message: "detecting candidate domains"
@@ -98,14 +101,16 @@ rule interproscan:
         pep = rules.transdecoder.output
     output:
         "{sample}/{sample}_domains.tsv"
+    conda:
+        "envs/ribotricer_env.yaml"
     threads: 12
     resources:
         mem_mb = 64000
     shell:
         """
-        #interproscan doesn't like * characters, need to remove them
+        # interproscan doesn't like * characters, need to remove them
         sed 's/\\*//g' {input.pep} > {wildcards.sample}/{wildcards.sample}_fixed_unique_novel_unannotated_no_known_overlap.pep
-        #running using only the pfam domain database-- can alter if desired with -appl 
-        module load interproscan
+        # running using only the pfam domain database-- can alter if desired with -appl 
+        # module load interproscan
         interproscan.sh --appl pfam -cpu 12 -i {wildcards.sample}/{wildcards.sample}_fixed_unique_novel_unannotated_no_known_overlap.pep -f tsv -o {wildcards.sample}/{wildcards.sample}_domains.tsv
         """
